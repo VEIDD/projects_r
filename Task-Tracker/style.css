@@ -1,0 +1,62 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+}
+
+.input {
+	width: 500px;
+	height: 40px;
+	border-radius: 10px;
+	border: 2px solid black;
+	padding-left: 10px;
+	font-size: 20px;	
+}
+
+.input::placeholder {
+	font-size: 20px;	
+}
+
+.enter {
+	width: 30px;
+	height: 30px;
+	z-index: 1;
+	position: relative;
+	left: -40px;
+	top: 10px;
+}
+
+.task {
+	margin-top: 30px;
+	display: flex;
+}
+.ready_task, .del_task {
+	width: 25px;
+	height: 25px;
+}
+.del_task {
+	margin-left: 65px;
+}
+.ready_task {
+	border-radius: 5px;
+	border: 2px solid black;
+	background: transparent;
+}
+.text_task {
+	margin-top: -2px;
+	margin-left: 10px;
+	font-size: 20px;
+}
+
+.ready_task_active {
+	background-color: gray;
+}
+
+.text_task_active {
+	text-decoration: line-through;
+	color: gray;
+}
