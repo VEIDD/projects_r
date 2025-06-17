@@ -1,0 +1,37 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.tabs {
+	display: flex;
+	gap: 200px;
+	justify-content: center;
+	margin-top: 20px;
+	font-size: 30px;
+	p {
+		cursor: pointer;
+		color: #444;
+	}
+}
+
+.active {
+	padding: 10px;
+	border-bottom: 2px solid black;
+}
+
+.content {
+	width: 1000px;
+	background-color: black;
+	border-radius: 50px;
+	height: 500px;
+	margin-top: 50px;
+	margin-left: 450px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	p{
+		color: white;
+		font-size: 25px;
+	}
+}
