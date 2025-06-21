@@ -60,7 +60,7 @@
 	display: none;
 }
 
-.list1, .list2 {
+.list {
 	list-style: none;
 	border: 2px solid black;
 	border-radius: 10px;
