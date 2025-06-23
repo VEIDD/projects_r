@@ -31,8 +31,12 @@ body {
 }
 
 .task {
+	width: 500px;
 	margin-top: 30px;
 	display: flex;
+	justify-content: space-between;
+	border-bottom: 2px solid #8d8b8b;
+	padding-bottom: 10px;
 }
 .ready_task, .del_task {
 	width: 25px;
@@ -40,6 +44,7 @@ body {
 }
 .del_task {
 	margin-left: 65px;
+
 }
 .ready_task {
 	border-radius: 5px;
@@ -48,7 +53,7 @@ body {
 }
 .text_task {
 	margin-top: -2px;
-	margin-left: 10px;
+	margin-left: 20px;
 	font-size: 20px;
 }
 

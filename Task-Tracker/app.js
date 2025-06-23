@@ -7,10 +7,23 @@ btn_enter.addEventListener("click", () => {
   createTask();
 });
 
+let isFocus = false
+input.addEventListener('focus', () => {
+  isFocus = true
+})
+input.addEventListener('blur', () => {
+  isFocus = false
+})
+document.addEventListener('keydown', () => {
+  if(isFocus){
+    createTask()
+  }
+})
 function changeCount(del, del_id) {
   let array = document.querySelectorAll(".task");
   count = array.length;
   localStorage.setItem("count", count);
+
   if(del){
     let array = document.querySelectorAll(".task");
     let a = 1
@@ -18,7 +31,7 @@ function changeCount(del, del_id) {
       task.setAttribute('data-task-id', a)
       a++
     })
-    if(del_id < array.length && del_id !== '1'){
+    if(del_id < array.length+1 && del_id !== '1'){
       for(let i = del_id; i < array.length+1; i++){
         let tempHtml = localStorage.getItem(i+1)
         localStorage.setItem(`${i}`, tempHtml)
@@ -57,12 +70,12 @@ function createTask() {
   btn_ready.addEventListener('click', () => {
     btn_ready.classList.toggle('ready_task_active')
     text_task.classList.toggle('text_task_active')
-    localStorage.setItem(count, block.innerHTML);
+    localStorage.setItem(block.getAttribute('data-task-id'), block.innerHTML);
     btn_ready_active = true
   })
-  if(!btn_ready_active){
-    localStorage.setItem(count, block.innerHTML);
-  }
+  // if(!btn_ready_active){
+  //   localStorage.setItem(count, block.innerHTML);
+  // }
 
   let del_task = document.createElement("img");
   del_task.setAttribute("src", "img/trash-can-svgrepo-com.svg");
@@ -75,8 +88,8 @@ function createTask() {
     );
     changeCount(true, +del_task.parentElement.getAttribute("data-task-id") );
   });
-  block.append(text_task, btn_ready, del_task);
-  localStorage.setItem(+localStorage.getItem("count")+1 || 1, block.innerHTML);
+  block.append(btn_ready,text_task,del_task);
+  localStorage.setItem(+localStorage.getItem("count")+1, block.innerHTML);
   container.append(block);
 
   changeCount();
@@ -86,11 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
   count = +localStorage.getItem('count')
 
   for(let i = 1; i < count+1; i++){
+
     let block = document.createElement('div');
     block.classList.add("task");
+    block.setAttribute("data-task-id", i);
     block.innerHTML = localStorage.getItem(i);
     let del_task = block.querySelector('.del_task')
 
+    
     if(del_task !== null){
       del_task.addEventListener("click", () => {
       block.remove();
@@ -106,9 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
       btn_ready.addEventListener('click', () => {
       btn_ready.classList.toggle('ready_task_active')
       text_task.classList.toggle('text_task_active')
-      localStorage.setItem(count, block.innerHTML);
+      localStorage.setItem(block.getAttribute('data-task-id'), block.innerHTML);
   })
     }
     container.append(block);
   }
+
 })
