@@ -134,7 +134,6 @@ function switchTime() {
   }
 }
 let all_time = 0;
-let start_date = Date.now()
 
 function startTimer() {
   isWork = true;
