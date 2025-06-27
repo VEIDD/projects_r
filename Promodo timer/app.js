@@ -87,6 +87,7 @@ btn_reset.addEventListener("click", () => {
   switchTime();
   clearProgress();
 	progress_bar.style = `width:378px`
+  sessionStorage.setItem('seconds', 0)
 });
 let str = "";
 let ready_time = {
@@ -101,7 +102,7 @@ function stopIntervals() {
   btn_stop.classList.add("hidden");
   btn_start.classList.remove("hidden");
   btn_reset.classList.add("hidden");
-	sessionStorage.setItem('seconds', 0)
+	
 }
 function clearProgress() {
   styles.textContent = `
@@ -155,7 +156,7 @@ function switchTime() {
     time = { hours: 0, minutes: 15, seconds: 0 };
     all_time = time.minutes * 60;
   }
-
+  
   stopIntervals();
   clearProgress();
 }
