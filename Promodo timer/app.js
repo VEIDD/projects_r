@@ -136,14 +136,20 @@ function switchTime() {
 let all_time = 0;
 
 function startTimer() {
+	let start_date = Date.now()
   isWork = true;
-  let interval_timer = setInterval(() => {
-
-    if (time.seconds === 0) {
-      time.minutes -= 1;
+		let a = 60
+		time.minutes -= 1;
+  	let interval_timer = setInterval(() => {
+		let seconds = Math.floor((Date.now() - start_date) / 1000)
+		if(seconds > 59){
+			time.minutes -= 1;
       time.seconds = 60;
-    }
-    time.seconds -= 1;
+			seconds = 0
+			a=60
+		}
+    
+    time.seconds = a - seconds;
     updateTime();
   }, 1000);
   intervals.push(interval_timer);
