@@ -201,6 +201,6 @@ function humanReadable(seconds) {
 }
 
 function endTimer(){
-	const audio = new Audio('/Promodo timer/audio/screamin_38dc25484811804.mp3')
+	const audio = new Audio('https://phoneky.co.uk/content/mp3tones/tone/2020/sound-fx/screamin_38dc25484811804.mp3')
 	audio.play()
 }
