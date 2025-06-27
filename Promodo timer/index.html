@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<script src='app.js' defer></script>
+	<title>Timer</title>
+</head>
+<body>
+	<div class="content">
+		<div class="btns">
+			<button class="btn active" data-tab-id="1">Focus</button>
+			<button class="btn" data-tab-id="2">Short Break</button>
+			<button class="btn" data-tab-id="3">Long Break</button>
+		</div>
+		<div class="timer">
+			<p class="timer_text">25:00</p>
+			<div class="progress_bar"></div>
+			<div class="add_time_div">
+				<p class='add_time'>+ 25 min</p>
+				<p class='add_time'>+ 10 min</p>
+				<p class='add_time'>+ 5 min</p>
+				<p class='add_time'>+ 1 min</p>
+			</div>
+			<div class="btns_control">
+				<button class="start">Start</button>
+				<button class="stop hidden">Stop</button>
+				<button class="reset hidden">Reset</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

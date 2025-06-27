@@ -1,0 +1,59 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+.content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 90vh;
+	flex-direction: column;
+}
+
+.btn {
+	font-size: 20px;
+	cursor: pointer;
+}
+.btns_control {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+}
+.timer_text {
+	font-size: 150px;
+}
+
+.start, .stop, .reset {
+	width: 100px;
+	margin-top: 20px;
+	font-size: 20px;
+	cursor: pointer;
+	
+}
+
+.add_time_div {
+	display: flex;
+	justify-content: space-between;
+	p {
+		cursor: pointer;
+	}
+}
+.active {
+	background-color: #aeaaaa;	
+	border-radius: 5px;
+}
+.hidden {
+	display: none;
+}
+.progress_bar {
+	width: 378px;
+	height: 3px;
+	background-color: black;
+}
+.progress_bar::before {
+	content: '';
+	display: block;
+	width: 0px;
+	height: 3px;
+	background-color: #ff0000;
+}
