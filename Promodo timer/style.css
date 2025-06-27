@@ -47,13 +47,13 @@
 }
 .progress_bar {
 	width: 378px;
-	height: 3px;
+	height: 10px;
 	background-color: black;
 }
 .progress_bar::before {
 	content: '';
 	display: block;
 	width: 0px;
-	height: 3px;
+	height: 10px;
 	background-color: #ff0000;
 }

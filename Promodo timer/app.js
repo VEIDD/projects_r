@@ -37,6 +37,10 @@ btns_add_time.forEach((btn) => {
     updateTime();
     if (!isWork) {
       startTimer();
+      startProgressBar();
+      btn_stop.classList.remove("hidden");
+      btn_reset.classList.remove("hidden");
+      btn_start.classList.add("hidden");
     }
   });
 });
@@ -54,35 +58,38 @@ btn_start.addEventListener("click", () => {
 });
 
 btn_stop.addEventListener("click", () => {
-  clearInterval(intervals[0]);
-  clearInterval(intervals[1]);
-  intervals = [];
-  btn_start.classList.remove("hidden");
-  btn_stop.classList.add("hidden");
+  stopIntervals();
 });
 
 btn_reset.addEventListener("click", () => {
-  clearInterval(intervals[0]);
-  clearInterval(intervals[1]);
-  intervals = [];
-  switchTime();
-  btn_stop.classList.add("hidden");
-  btn_start.classList.remove("hidden");
-  btn_reset.classList.add("hidden");
-  styles.textContent = `
-		.progress_bar::before {
-		content: '';
-		display: block;
-		width: 0px;
-		height: 3px;
-		background-color: #ff0000;
-	}`;
+  stopIntervals();
+	switchTime();
 });
 let str = "";
 let ready_time = {
   ...time,
 };
 
+function stopIntervals() {
+  clearInterval(intervals[0]);
+  clearInterval(intervals[1]);
+  intervals = [];
+  let isWork = false;
+  btn_stop.classList.add("hidden");
+  btn_start.classList.remove("hidden");
+  btn_reset.classList.add("hidden");
+  clearProgress();
+}
+function clearProgress() {
+  styles.textContent = `
+		.progress_bar::before {
+		content: '';
+		display: block;
+		width: 0px;
+		height: 10px;
+		background-color: #ff0000;
+	}`;
+}
 function updateTime() {
   ready_time = { ...time };
 
@@ -107,14 +114,17 @@ function switchTime() {
     case 1:
       timer.textContent = `25:00`;
       time = { hours: 0, minutes: 25, seconds: 0 };
+			stopIntervals()
       break;
     case 2:
       timer.textContent = `05:00`;
       time = { hours: 0, minutes: 5, seconds: 0 };
+			stopIntervals()
       break;
     case 3:
       timer.textContent = `15:00`;
       time = { hours: 0, minutes: 15, seconds: 0 };
+			stopIntervals()
       break;
   }
 }
@@ -159,11 +169,10 @@ function startProgressBar() {
 		content: '';
 		display: block;
 		width: ${width}px;
-		height: 3px;
+		height: 10px;
 		background-color: #ff0000;
 	}
 		`;
   }, 1000);
   intervals.push(progress);
-  console.log(intervals);
 }
