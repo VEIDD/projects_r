@@ -139,6 +139,7 @@ let start_date = Date.now()
 function startTimer() {
   isWork = true;
   let interval_timer = setInterval(() => {
+
     if (time.seconds === 0) {
       time.minutes -= 1;
       time.seconds = 60;
