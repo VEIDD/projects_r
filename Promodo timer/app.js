@@ -1,5 +1,5 @@
 import { humanReadable } from "./humanReadable.js";
-
+sessionStorage.setItem('seconds', 0)
 const btns = document.querySelectorAll(".btn");
 const timer = document.querySelector(".timer_text");
 const btns_add_time = document.querySelectorAll(".add_time");
@@ -52,14 +52,15 @@ btns_add_time.forEach((btn) => {
       time.minutes = time.minutes - 60;
     }
 
-    let time_ = humanReadable(all_time);
+    let time_ = humanReadable(all_time - +sessionStorage.getItem('seconds'));
     updateTime(time_);
-
-    startTimer();
-    startProgressBar();
-    btn_stop.classList.remove("hidden");
-    btn_reset.classList.remove("hidden");
-    btn_start.classList.add("hidden");
+		if(!isWork){
+			startTimer();
+			startProgressBar();
+			btn_stop.classList.remove("hidden");
+			btn_reset.classList.remove("hidden");
+			btn_start.classList.add("hidden");
+		}
   });
 });
 
@@ -95,10 +96,11 @@ function stopIntervals() {
   clearInterval(intervals[0]);
   clearInterval(intervals[1]);
   intervals = [];
-  let isWork = false;
+  isWork = false;
   btn_stop.classList.add("hidden");
   btn_start.classList.remove("hidden");
   btn_reset.classList.add("hidden");
+	sessionStorage.setItem('seconds', 0)
 }
 function clearProgress() {
   styles.textContent = `
@@ -110,7 +112,7 @@ function clearProgress() {
 		background-color: #ff0000;
 	}`;
 }
-function updateTime(a) {
+function updateTime(a, b) {
   if (a) {
     if (all_time < 3600) {
       str = `${a.slice(3, 8)}`;
@@ -156,16 +158,17 @@ function switchTime() {
 }
 
 function startTimer() {
-  let start_date = Date.now();
+	let start_date = Date.now();
   isWork = true;
   time.minutes -= 1;
   let interval_timer = setInterval(() => {
     let seconds = Math.floor((Date.now() - start_date) / 1000);
+		sessionStorage.setItem('seconds', seconds)
     let time_ = humanReadable(all_time - seconds);
     if (10 === seconds) {
       endTimer();
     }
-    updateTime(time_);
+    updateTime(time_, seconds);
   }, 1000);
   intervals.push(interval_timer);
 }
@@ -194,7 +197,6 @@ function startProgressBar(value) {
   intervals.push(progress);
 }
 
-let a = humanReadable(2134);
 
 function endTimer() {
   const audio = new Audio(
