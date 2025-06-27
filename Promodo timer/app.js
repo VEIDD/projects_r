@@ -86,6 +86,7 @@ btn_reset.addEventListener("click", () => {
   stopIntervals();
   switchTime();
   clearProgress();
+	progress_bar.style = `width:378px`
 });
 let str = "";
 let ready_time = {
@@ -116,8 +117,10 @@ function updateTime(a, b) {
   if (a) {
     if (all_time < 3600) {
       str = `${a.slice(3, 8)}`;
+			progress_bar.style = `width:378px`
     } else {
       str = `${a}`;
+			progress_bar.style = `width:588px`
     }
   } else {
     ready_time = { ...time };
