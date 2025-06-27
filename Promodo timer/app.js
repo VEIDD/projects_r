@@ -51,7 +51,8 @@ document.head.appendChild(styles);
 
 btn_start.addEventListener("click", () => {
   startTimer();
-  startProgressBar();
+	let style = getComputedStyle(progress_bar, '::before');
+  startProgressBar(parseFloat(style.getPropertyValue("width")));
   btn_stop.classList.remove("hidden");
   btn_reset.classList.remove("hidden");
   btn_start.classList.add("hidden");
@@ -59,11 +60,13 @@ btn_start.addEventListener("click", () => {
 
 btn_stop.addEventListener("click", () => {
   stopIntervals();
+	btn_reset.classList.remove("hidden");
 });
 
 btn_reset.addEventListener("click", () => {
   stopIntervals();
 	switchTime();
+	clearProgress();
 });
 let str = "";
 let ready_time = {
@@ -78,7 +81,6 @@ function stopIntervals() {
   btn_stop.classList.add("hidden");
   btn_start.classList.remove("hidden");
   btn_reset.classList.add("hidden");
-  clearProgress();
 }
 function clearProgress() {
   styles.textContent = `
@@ -115,23 +117,27 @@ function switchTime() {
       timer.textContent = `25:00`;
       time = { hours: 0, minutes: 25, seconds: 0 };
 			stopIntervals()
+			clearProgress();
       break;
     case 2:
       timer.textContent = `05:00`;
       time = { hours: 0, minutes: 5, seconds: 0 };
 			stopIntervals()
+			clearProgress();
       break;
     case 3:
       timer.textContent = `15:00`;
       time = { hours: 0, minutes: 15, seconds: 0 };
 			stopIntervals()
+			clearProgress();
       break;
   }
 }
+let all_time = 0;
+let start_date = Date.now()
 
 function startTimer() {
   isWork = true;
-
   let interval_timer = setInterval(() => {
     if (time.seconds === 0) {
       time.minutes -= 1;
@@ -144,12 +150,11 @@ function startTimer() {
 }
 
 let progress_bar = document.querySelector(".progress_bar");
-let all_time = 0;
 
-function startProgressBar() {
+function startProgressBar(value) {
   let style = getComputedStyle(progress_bar);
 
-  let width = 0;
+  let width = 0 || value;
   if (time.hours !== 0) {
     all_time = time.hours * 60 * 60;
   }
@@ -162,7 +167,9 @@ function startProgressBar() {
 
   let percent_width = parseFloat(style.getPropertyValue("width")) / all_time;
 
+
   let progress = setInterval(() => {
+		
     width += percent_width;
     styles.textContent = `
 		.progress_bar::before {
