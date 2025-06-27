@@ -14,8 +14,8 @@ input.addEventListener('focus', () => {
 input.addEventListener('blur', () => {
   isFocus = false
 })
-document.addEventListener('keydown', () => {
-  if(isFocus){
+document.addEventListener('keydown', (key) => {
+  if(isFocus && key.key === 'Enter'){
     createTask()
   }
 })
