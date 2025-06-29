@@ -26,6 +26,7 @@ let time = {
   minutes: 25,
   seconds: 0,
 };
+
 let all_time = 0;
 function allTime() {
   if (time.hours !== 0) {
@@ -43,18 +44,31 @@ let isWork = false;
 
 btns_add_time.forEach((btn) => {
   btn.addEventListener("click", () => {
-    const value = parseInt(btn.textContent.slice(2, 9));
+    const sign = btn.textContent.slice(0,2).trim()
+    const value = parseInt(btn.textContent.slice( 2, 9));
+    if(sign === '-'){
+      time.minutes -= value;
+      all_time -= value * 60;
 
-    time.minutes += value;
-    all_time += value * 60;
+      if(all_time < 0){
+        stopIntervals()
+        
+        all_time = 0
+      }  
+    } else if(sign === '+') {
+      time.minutes += value;
+      all_time += value * 60;
+    }
+    
     if (time.minutes > 59) {
       time.hours++;
       time.minutes = time.minutes - 60;
     }
-
+    
     let time_ = humanReadable(all_time - +sessionStorage.getItem('seconds'));
     updateTime(time_);
-		if(!isWork){
+
+		if(!isWork && all_time > 0){
 			startTimer();
 			startProgressBar();
 			btn_stop.classList.remove("hidden");
@@ -69,12 +83,16 @@ const styles = document.createElement("style");
 document.head.appendChild(styles);
 
 btn_start.addEventListener("click", () => {
-  startTimer();
-  let style = getComputedStyle(progress_bar, "::before");
-  startProgressBar(parseFloat(style.getPropertyValue("width")));
-  btn_stop.classList.remove("hidden");
-  btn_reset.classList.remove("hidden");
-  btn_start.classList.add("hidden");
+  if(timer.textContent !== '00:00'){
+    startTimer();
+    let style = getComputedStyle(progress_bar, "::before");
+    startProgressBar(parseFloat(style.getPropertyValue("width")));
+    btn_stop.classList.remove("hidden");
+    btn_reset.classList.remove("hidden");
+    btn_start.classList.add("hidden");
+  } else {
+    showModal()
+  }
 });
 
 btn_stop.addEventListener("click", () => {
@@ -114,7 +132,7 @@ function clearProgress() {
 		background-color: #ff0000;
 	}`;
 }
-function updateTime(a, b) {
+function updateTime(a) {
   if (a) {
     if (all_time < 3600) {
       str = `${a.slice(3, 8)}`;
@@ -169,10 +187,10 @@ function startTimer() {
     let seconds = Math.floor((Date.now() - start_date) / 1000);
 		sessionStorage.setItem('seconds', seconds)
     let time_ = humanReadable(all_time - seconds);
-    if (10 === seconds) {
+    if (all_time === seconds) {
       endTimer();
     }
-    updateTime(time_, seconds);
+    updateTime(time_);
   }, 1000);
   intervals.push(interval_timer);
 }
@@ -201,10 +219,17 @@ function startProgressBar(value) {
   intervals.push(progress);
 }
 
-
 function endTimer() {
   const audio = new Audio(
     "https://phoneky.co.uk/content/mp3tones/tone/2020/sound-fx/screamin_38dc25484811804.mp3"
   );
   audio.play();
+}
+
+function showModal(){
+  let modal = document.querySelector('.modal')
+  modal.classList.remove('hidden')
+  setTimeout(() => {
+    modal.classList.add('hidden')
+  }, 2000);
 }
