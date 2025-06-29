@@ -49,15 +49,16 @@ btns_add_time.forEach((btn) => {
     if(sign === '-'){
       time.minutes -= value;
       all_time -= value * 60;
-
-      if(all_time < 0){
+      if(all_time < 0 || all_time === 0){
+        console.log(all_time)
         stopIntervals()
-        
+        sessionStorage.setItem('seconds', 0)
         all_time = 0
       }  
     } else if(sign === '+') {
       time.minutes += value;
       all_time += value * 60;
+      console.log(all_time)
     }
     
     if (time.minutes > 59) {
